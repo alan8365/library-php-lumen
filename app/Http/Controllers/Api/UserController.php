@@ -132,7 +132,7 @@ class UserController extends Controller
      * @return JsonResponse
      * Get current user info
      */
-    public function me()
+    public function whoAmI()
     {
         return resp(Code::UserIsMe, Msg::UserIsMe, auth()->user());
     }

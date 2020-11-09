@@ -24,5 +24,5 @@ $router->group([
     $router->post('/logout', 'UserController@logout');
 
     $router->get('', 'UserController@index');
-    $router->get('/me', 'UserController@me');
+    $router->get('/whoAmI', 'UserController@whoAmI');
 });
