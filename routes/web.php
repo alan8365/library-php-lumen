@@ -17,8 +17,3 @@ use Illuminate\Support\Facades\Route;
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
-
-/** @var Route $router */
-$router->get('/user', function () use ($router) {
-    return \App\User::all();
-});

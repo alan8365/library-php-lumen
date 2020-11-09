@@ -10,6 +10,7 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
+
 use \Laravel\Lumen\Routing\Router;
 
 
@@ -20,7 +21,8 @@ $router->group([
 ], function () use ($router) {
     $router->post('/store', 'UserController@store');
     $router->post('/login', 'UserController@login');
-    $router->get('/user', 'UserController@index');
+    $router->post('/logout', 'UserController@logout');
+
+    $router->get('', 'UserController@index');
     $router->get('/me', 'UserController@me');
-    $router->get('/logout', 'UserController@logout');
 });
