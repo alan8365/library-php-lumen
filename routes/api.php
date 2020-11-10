@@ -32,6 +32,7 @@ $router->group([
 $router->group([
     'prefix' => 'book',
     'namespace' => 'Api',
+    'middleware' => 'cors'
 ], function () use ($router) {
     $router->get('', 'BookController@list');
     $router->post('', 'BookController@store');
