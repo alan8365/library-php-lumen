@@ -26,3 +26,15 @@ $router->group([
     $router->get('', 'UserController@index');
     $router->get('/whoAmI', 'UserController@whoAmI');
 });
+
+
+/** @var Router $router */
+$router->group([
+    'prefix' => 'book',
+    'namespace' => 'Api',
+], function () use ($router) {
+    $router->get('', 'BookController@list');
+    $router->post('', 'BookController@store');
+    $router->get('favorite', 'BookController@listFavorite');
+    $router->post('favorite/{isbn}', 'BookController@setFavorite');
+});

@@ -44,6 +44,14 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     ];
 
     /**
+     * The roles that belong to the user.
+     */
+    public function books()
+    {
+        return $this->belongsToMany('App\Models\Book', 'user_favorite_book', 'user_id', 'book_id');
+    }
+
+    /**
      * @inheritDoc
      * Get JWT identifier
      */

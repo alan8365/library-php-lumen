@@ -102,11 +102,13 @@ class UserController extends Controller
             'email' => 'required',
             'password' => 'required'
         ], $message);
+
         if ($validator->fails()) {
             foreach ($validator->errors()->getMessages() as $error) {
                 return resp(Code::LoginFailed, $error[0]);
             }
         }
+
         $credentials = request(['email', 'password']);
         if (!$token = auth()->attempt($credentials)) {
             return resp(Code::LoginFailed, Msg::LoginFailed);
