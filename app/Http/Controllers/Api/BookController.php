@@ -19,7 +19,7 @@ class BookController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['list', 'store']]);
+        $this->middleware('auth:api', ['except' => ['list', 'store', 'detail']]);
     }
 
     /**
@@ -28,10 +28,24 @@ class BookController extends Controller
      */
     public function list(Request $request)
     {
-        $perPage = intval($request->get('perPage'));
+        // TODO perPage uniform
+        $books = (new Book)->paginate(10);
 
-        $books = (new Book)->paginate($perPage);
+//        $books = Book::all()->leftJoin('', 'books.isbn', '=', 'users');
+        return resp(Code::Success, Msg::Success, $books);
+    }
 
+    /**
+     * @param Request $request
+     * @param string $isbn
+     * @return JsonResponse
+     */
+    public function detail(Request $request, string $isbn)
+    {
+        // TODO perPage uniform
+        $books = Book::find($isbn);
+
+//        $books = Book::all()->leftJoin('', 'books.isbn', '=', 'users');
         return resp(Code::Success, Msg::Success, $books);
     }
 
@@ -49,6 +63,7 @@ class BookController extends Controller
         $publisher = $request->get('publisher');
         $publicationDate = $request->get('publication_date');
         $summary = $request->get('summary');
+        $imgSrc = $request->get('img_src');
 
         $attributes = [
             'isbn' => $isbn,
@@ -56,10 +71,12 @@ class BookController extends Controller
             'author' => $author,
             'publisher' => $publisher,
             'publication_date' => $publicationDate,
-            'summary' => $summary
+            'img_src' => $imgSrc,
+            'summary' => $summary,
         ];
+        error_log(print_r($attributes, true));
 
-        $book = (new Book)->create($attributes);
+        $book = Book::create($attributes);
 
         return resp(Code::Success, Msg::Success, $book);
     }
@@ -73,7 +90,9 @@ class BookController extends Controller
         $perPage = intval($request->get('perPage'));
 
         $user = auth()->user();
-        $books = $user->books()->get();
+
+        // TODO perPage uniform
+        $books = $user->books()->paginate(10);
 
         return resp(Code::Success, Msg::Success, $books);
     }
@@ -86,8 +105,16 @@ class BookController extends Controller
     public function setFavorite(Request $request, string $isbn)
     {
         $user = auth()->user();
-        $user->books()->attach([$isbn]);
 
-        return resp(Code::Success, Msg::Success, $user);
+        $isLiked = $user->books()->where('isbn', '=', $isbn)->count() < 1;
+
+        if ($isLiked){
+            $user->books()->attach($isbn);
+            return resp(Code::Success, Msg::SetFavoriteSuccess);
+        }else{
+            $user->books()->detach($isbn);
+            return resp(Code::Success, Msg::UnsetFavoriteSuccess);
+        }
+
     }
 }

@@ -35,6 +35,7 @@ $router->group([
 ], function () use ($router) {
     $router->get('', 'BookController@list');
     $router->post('', 'BookController@store');
+    $router->get('{isbn:\d+}', 'BookController@detail');
     $router->get('favorite', 'BookController@listFavorite');
     $router->post('favorite/{isbn}', 'BookController@setFavorite');
 });

@@ -47,7 +47,7 @@ class UserController extends Controller
 
         if ($validator->fails()) {
             foreach ($validator->errors()->getMessages() as $error) {
-                return resp(Code::CreateUserFailed, $error[0]);
+                return resp(Code::Failed, $error[0]);
             }
         }
 
@@ -63,7 +63,7 @@ class UserController extends Controller
 
         $user = User::create($attributes);
 
-        return resp(Code::CreateUserSuccess, Msg::CreateUserSuccess, $user);
+        return resp(Code::Success, Msg::CreateUserSuccess);
     }
 
     /**
@@ -87,6 +87,7 @@ class UserController extends Controller
         return resp(Code::Success, Msg::Success, $user);
     }
 
+    // TODO Let exp longer
     /**
      * @param Request $request
      * @return JsonResponse
@@ -113,7 +114,7 @@ class UserController extends Controller
         if (!$token = auth()->attempt($credentials)) {
             return resp(Code::LoginFailed, Msg::LoginFailed);
         }
-        return resp(Code::LoginSuccess, Msg::LoginSuccess, $this->responseWithToken($token));
+        return resp(Code::Success, Msg::LoginSuccess, $this->responseWithToken($token));
     }
 
     /**
