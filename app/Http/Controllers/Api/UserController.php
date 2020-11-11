@@ -106,13 +106,13 @@ class UserController extends Controller
 
         if ($validator->fails()) {
             foreach ($validator->errors()->getMessages() as $error) {
-                return resp(Code::LoginFailed, $error[0]);
+                return resp(Code::NotFound, $error[0]);
             }
         }
 
         $credentials = request(['email', 'password']);
         if (!$token = auth()->attempt($credentials)) {
-            return resp(Code::LoginFailed, Msg::LoginFailed);
+            return resp(Code::NotFound, Msg::LoginFailed);
         }
         return resp(Code::Success, Msg::LoginSuccess, $this->responseWithToken($token));
     }

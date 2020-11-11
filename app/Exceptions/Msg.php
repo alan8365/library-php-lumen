@@ -5,7 +5,8 @@ namespace App\Exceptions;
 
 
 class Msg
-{
+{   
+    // TODO traslate to chinese
     const Success = 'Success';
     const Unauthorized = 'Unauthorized';
     const Failed = 'Failed';

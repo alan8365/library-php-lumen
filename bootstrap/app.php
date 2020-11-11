@@ -72,7 +72,8 @@ $app->configure('app');
 */
 
 $app->middleware([
-//    Nord\Lumen\Cors\CorsMiddleware::class,
+    // Nord\Lumen\Cors\CorsMiddleware::class,
+    App\Http\Middleware\CorsMiddleware::class
 ]);
 
 $app->routeMiddleware([
@@ -121,5 +122,7 @@ $app->router->group([
     require __DIR__ . '/../routes/web.php';
     require __DIR__ . '/../routes/api.php';
 });
+
+
 
 return $app;

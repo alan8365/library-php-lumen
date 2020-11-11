@@ -18,6 +18,7 @@ use \Laravel\Lumen\Routing\Router;
 $router->group([
     'prefix' => 'auth',
     'namespace' => 'Api',
+    'middleware' => 'cors'
 ], function () use ($router) {
     $router->post('/store', 'UserController@store');
     $router->post('/login', 'UserController@login');

@@ -11,7 +11,7 @@ class CorsMiddleware
 {
     // 允許要求的 Origin
     protected $allowOrigin = [
-        'http://localhost'
+        '*'
     ];
 
     /**
@@ -21,33 +21,27 @@ class CorsMiddleware
      * @param Closure $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle($request, Closure $next)
     {
-        $origin = $request->header('Origin');
+        $headers = [
+            'Access-Control-Allow-Origin'      => '*',
+            'Access-Control-Allow-Methods'     => 'POST, GET, OPTIONS, PUT, DELETE',
+            'Access-Control-Allow-Credentials' => 'true',
+            'Access-Control-Max-Age'           => '86400',
+            'Access-Control-Allow-Headers'     => 'Content-Type, Authorization, X-Requested-With'
+        ];
 
-        // 判斷是否為合法來源
-        $isAllowOrigin = in_array($origin, $this->allowOrigin);
-
-        // 判斷是否為 HTTP OPTIONS method
-        $isOptions = $request->isMethod('OPTIONS');
-
-        if (!$isAllowOrigin && $isOptions) {
-            // 非法來源
-            return new Response('', Response::HTTP_FORBIDDEN);
+        if ($request->isMethod('OPTIONS'))
+        {
+            return response()->json('{"method":"OPTIONS"}', 200, $headers);
         }
 
-        if ($isOptions) {
-            // 合法來源的預檢請求
-            $response = new Response('', Response::HTTP_OK);
-        } else {
-            $response = $next($request);
+        $response = $next($request);
+        foreach($headers as $key => $value)
+        {
+            $response->header($key, $value);
         }
 
-        // 設定 Header
-        return $response->withHeaders([
-            'Access-Control-Allow-Origin' => $origin,
-            'Access-Control-Allow-Methods' => '*',
-            'Access-Control-Allow-Headers' => 'Content-Type, X-Requested-With, Authorization',
-        ]);
+        return $response;
     }
 }

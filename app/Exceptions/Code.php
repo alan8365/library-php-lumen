@@ -7,8 +7,10 @@ namespace App\Exceptions;
 class Code
 {
     const   Success = 200;
+    const   Failed = 400;
     const   Unauthorized = 401;
-    const   Failed = 500;
+    const   NotFound = 404;
+
 
     const   CreateUserSuccess = 10001;
     const   CreateUserFailed = 10002;
