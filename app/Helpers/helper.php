@@ -5,11 +5,11 @@ use Laravel\Lumen\Routing\UrlGenerator;
 if (!function_exists('resp')) {
     function resp($code = 200, $msg = '', $data = [])
     {
-        return response()->json([
+        return response([
             'code' => $code,
             'msg' => $msg,
             'data' => $data,
-        ]);
+        ], $code);
     }
 }
 
