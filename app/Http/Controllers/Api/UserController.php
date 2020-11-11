@@ -137,7 +137,7 @@ class UserController extends Controller
      */
     public function whoAmI()
     {
-        return resp(Code::UserIsMe, Msg::UserIsMe, auth()->user());
+        return resp(Code::Success, Msg::UserIsMe, auth()->user());
     }
 
     /**
@@ -147,7 +147,7 @@ class UserController extends Controller
     public function logout()
     {
         auth()->logout();
-        return resp(Code::LogOutSuccess, Msg::LogOutSuccess);
+        return resp(Code::Success, Msg::LogOutSuccess);
     }
 
     /**
