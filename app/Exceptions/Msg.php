@@ -5,13 +5,13 @@ namespace App\Exceptions;
 
 
 class Msg
-{   
+{
     // TODO traslate to chinese
-    const Success = 'Success';
-    const Unauthorized = 'Unauthorized';
-    const Failed = 'Failed';
+    const Success = '成功';
+    const Unauthorized = '未登入';
+    const Failed = '失敗';
 
-    const CreateUserSuccess = 'CreateUserSuccess';
+    const CreateUserSuccess = '註冊成功';
     const CreateUserFailed = 'CreateUserFailed';
     const LoginSuccess = 'LoginSuccess';
     const LoginFailed = 'LoginFailed';

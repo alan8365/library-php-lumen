@@ -13,6 +13,8 @@
 
 use \Laravel\Lumen\Routing\Router;
 
+/** @var Router $router */
+$router->options('{any:.*}', ['middleware' => 'cors']);
 
 /** @var Router $router */
 $router->group([

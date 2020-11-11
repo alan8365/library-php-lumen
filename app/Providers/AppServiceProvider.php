@@ -15,13 +15,11 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
-        error_log($this->app->isLocal());
+
     }
 
     public function boot()
     {
         //
-        Schema::defaultStringLength(191);
-        \URL::forceScheme('https');
     }
 }

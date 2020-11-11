@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Exceptions\Code;
 use App\Exceptions\Msg;
 use App\Models\Book;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use phpDocumentor\Reflection\Types\True_;
+use Illuminate\Http\Response;
+
+const perPage = 10;
 
 class BookController extends Controller
 {
@@ -24,34 +25,34 @@ class BookController extends Controller
 
     /**
      * @param Request $request
-     * @return JsonResponse
+     * @return Response
      */
     public function list(Request $request)
     {
-        // TODO perPage uniform
-        $books = (new Book)->paginate(10);
+        $books = (new Book)->paginate(perPage);
 
-//        $books = Book::all()->leftJoin('', 'books.isbn', '=', 'users');
+        // $books = Book::all()->leftJoin('', 'books.isbn', '=', 'users');
         return resp(Code::Success, Msg::Success, $books);
     }
 
     /**
      * @param Request $request
      * @param string $isbn
-     * @return JsonResponse
+     * @return Response
      */
     public function detail(Request $request, string $isbn)
     {
-        // TODO perPage uniform
-        $books = Book::find($isbn);
+        $book = (new Book)->find($isbn);
+        $user = auth()->user();
+        $isLike = $book->users()->where('email', '=', $user->email)->get()->count() > 0;
 
 //        $books = Book::all()->leftJoin('', 'books.isbn', '=', 'users');
-        return resp(Code::Success, Msg::Success, $books);
+        return resp(Code::Success, Msg::Success, [$book, $isLike]);
     }
 
     /**
      * @param Request $request
-     * @return JsonResponse
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -83,16 +84,16 @@ class BookController extends Controller
 
     /**
      * @param Request $request
-     * @return JsonResponse
+     * @return Response
      */
     public function listFavorite(Request $request)
     {
-        $perPage = intval($request->get('perPage'));
+        // $perPage = intval($request->get('perPage'));
 
         $user = auth()->user();
 
         // TODO perPage uniform
-        $books = $user->books()->paginate(10);
+        $books = $user->books()->paginate(perPage);
 
         return resp(Code::Success, Msg::Success, $books);
     }
@@ -100,7 +101,7 @@ class BookController extends Controller
     /**
      * @param Request $request
      * @param string $isbn
-     * @return JsonResponse
+     * @return Response
      */
     public function setFavorite(Request $request, string $isbn)
     {

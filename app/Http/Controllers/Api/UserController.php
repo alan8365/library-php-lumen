@@ -7,6 +7,7 @@ use App\Exceptions\Msg;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 
@@ -24,7 +25,7 @@ class UserController extends Controller
 
     /**
      * @param Request $request
-     * @return JsonResponse
+     * @return Response
      * Register user
      */
     public function store(Request $request)
@@ -67,7 +68,7 @@ class UserController extends Controller
     }
 
     /**
-     * @return JsonResponse
+     * @return Response
      * Get all user
      */
     public function index()
@@ -78,7 +79,7 @@ class UserController extends Controller
 
     /**
      * @param string $email
-     * @return JsonResponse
+     * @return Response
      * Get target user
      */
     public function find(string $email)
@@ -90,7 +91,7 @@ class UserController extends Controller
     // TODO Let exp longer
     /**
      * @param Request $request
-     * @return JsonResponse
+     * @return Response
      * User login
      */
     public function login(Request $request)
@@ -132,7 +133,7 @@ class UserController extends Controller
     }
 
     /**
-     * @return JsonResponse
+     * @return Response
      * Get current user info
      */
     public function whoAmI()
@@ -141,7 +142,7 @@ class UserController extends Controller
     }
 
     /**
-     * @return JsonResponse
+     * @return Response
      * User logout
      */
     public function logout()

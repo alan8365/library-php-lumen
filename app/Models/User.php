@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Laravel\Lumen\Auth\Authorizable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
@@ -21,7 +22,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public $incrementing = false;
 
-//    protected $table = 'users';
+    public $table = 'users';
     protected $keyType = 'string';
     protected $primaryKey = 'email';
 
@@ -45,6 +46,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     /**
      * The roles that belong to the user.
+     * @return BelongsToMany
      */
     public function books()
     {
