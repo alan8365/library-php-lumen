@@ -73,7 +73,8 @@ $app->configure('app');
 
 $app->middleware([
     // Nord\Lumen\Cors\CorsMiddleware::class,
-    App\Http\Middleware\CorsMiddleware::class
+    App\Http\Middleware\CorsMiddleware::class,
+    App\Http\Middleware\LogAfterRequestMiddleware::class
 ]);
 
 $app->routeMiddleware([

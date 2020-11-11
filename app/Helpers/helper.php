@@ -1,8 +1,15 @@
 <?php
 
+use Illuminate\Http\Response;
 use Laravel\Lumen\Routing\UrlGenerator;
 
 if (!function_exists('resp')) {
+    /**
+     * @param int $code
+     * @param string $msg
+     * @param array $data
+     * @return Response
+     */
     function resp($code = 200, $msg = '', $data = [])
     {
         return response([
