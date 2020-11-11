@@ -42,13 +42,13 @@ class BookController extends Controller
      */
     public function detail(Request $request, string $isbn)
     {
-        $book = (new Book)->find($isbn);
+        $book = Book::where('isbn', '=', $isbn)->first();
         $user = auth()->user();
         $isLike = $book->users()->where('email', '=', $user->email)->get()->count() > 0;
 
 //        $books = Book::all()->leftJoin('', 'books.isbn', '=', 'users');
         return resp(Code::Success, Msg::Success, [
-            'detail' => $book->first(),
+            'detail' => $book,
             'isLike' => $isLike
         ]);
     }
