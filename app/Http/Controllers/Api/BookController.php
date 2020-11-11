@@ -47,7 +47,10 @@ class BookController extends Controller
         $isLike = $book->users()->where('email', '=', $user->email)->get()->count() > 0;
 
 //        $books = Book::all()->leftJoin('', 'books.isbn', '=', 'users');
-        return resp(Code::Success, Msg::Success, [$book, $isLike]);
+        return resp(Code::Success, Msg::Success, [
+            'detail' => $book->first(),
+            'isLike' => $isLike
+        ]);
     }
 
     /**
