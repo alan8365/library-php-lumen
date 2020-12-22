@@ -26,6 +26,7 @@ $app = new Laravel\Lumen\Application(
 $app->withFacades();
 $app->withEloquent();
 
+$app->configure('swagger-lume');
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -105,6 +106,11 @@ $app->register(\Thedevsaddam\LumenRouteList\LumenRouteListServiceProvider::class
 
 
 //$app->register(\Nord\Lumen\Cors\CorsServiceProvider::class);
+
+/*
+ * register swagger
+ * */
+$app->register(\SwaggerLume\ServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------

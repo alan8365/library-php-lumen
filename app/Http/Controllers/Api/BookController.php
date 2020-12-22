@@ -26,6 +26,14 @@ class BookController extends Controller
     /**
      * @param Request $request
      * @return Response
+     *
+     * @OA\Get(
+     *     path="user/list",
+     *     @OA\Response(
+     *         response="default",
+     *         description="HIHI"
+     *     )
+     * )
      */
     public function list(Request $request)
     {
