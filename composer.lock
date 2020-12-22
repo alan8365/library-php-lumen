@@ -114,6 +114,10 @@
                 "lumen",
                 "swagger"
             ],
+            "support": {
+                "issues": "https://github.com/DarkaOnLine/SwaggerLume/issues",
+                "source": "https://github.com/DarkaOnLine/SwaggerLume/tree/7.0"
+            },
             "time": "2020-03-26T09:34:03+00:00"
         },
         {
@@ -185,6 +189,10 @@
                 "docblock",
                 "parser"
             ],
+            "support": {
+                "issues": "https://github.com/doctrine/annotations/issues",
+                "source": "https://github.com/doctrine/annotations/tree/1.11.1"
+            },
             "time": "2020-10-26T10:28:16+00:00"
         },
         {
@@ -2874,6 +2882,10 @@
                 "swagger",
                 "ui"
             ],
+            "support": {
+                "issues": "https://github.com/swagger-api/swagger-ui/issues",
+                "source": "https://github.com/swagger-api/swagger-ui/tree/v3.38.0"
+            },
             "time": "2020-12-10T20:44:28+00:00"
         },
         {
@@ -4920,6 +4932,9 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/yaml/tree/v5.2.0"
+            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -5285,6 +5300,10 @@
                 "rest",
                 "service discovery"
             ],
+            "support": {
+                "issues": "https://github.com/zircote/swagger-php/issues",
+                "source": "https://github.com/zircote/swagger-php/tree/3.1.0"
+            },
             "time": "2020-09-03T20:18:43+00:00"
         }
     ],
