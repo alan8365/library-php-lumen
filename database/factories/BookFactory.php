@@ -23,9 +23,9 @@ use Illuminate\Support\Str;
 $factory->define(Book::class, function (Faker $faker) {
     return [
         'isbn' => $faker->isbn13,
-        'title' => $faker->title,
-        'author' => $faker->firstName . $faker->lastName,
-        'publisher' => $faker->realText(50),
+        'title' => $faker->realText(100),
+        'author' => $faker->firstName . ' ' . $faker->lastName,
+        'publisher' => $faker->name(),
         'publication_date' => $faker->dateTime,
         'summary' => $faker->realText(),
         'img_src' => '',

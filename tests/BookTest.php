@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Book;
 use App\Models\User;
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
@@ -38,7 +39,7 @@ class BookTest extends TestCase
      *
      * @return void
      */
-    public function testBook()
+    public function testList()
     {
         $response = $this->json('GET', '/book', ['perPage' => '1']);
 
@@ -75,8 +76,12 @@ class BookTest extends TestCase
     public function testSetFavorite()
     {
         $user = factory(User::class)->create();
+        $book = factory(Book::class)->create();
+
+        print_r($book->isbn);
+
         $response = $this->actingAs($user)
-            ->json('POST', '/book/favorite/' . $this->test_isbn);
+            ->json('POST', '/book/favorite/' . $book->isbn);
 
         $response->assertResponseOk();
     }
@@ -87,7 +92,7 @@ class BookTest extends TestCase
             ->create();
 
         $user->books()
-            ->save(factory(\App\Models\Book::class)->make());
+            ->save(factory(Book::class)->create());
 
         $response = $this->actingAs($user)
             ->json('GET', '/book/favorite');
@@ -103,4 +108,6 @@ class BookTest extends TestCase
             )
         ]);
     }
+
+    //TODO expect case test
 }

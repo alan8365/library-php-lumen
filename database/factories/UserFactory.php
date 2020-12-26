@@ -23,6 +23,6 @@ $factory->define(User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->email,
-        'password' => Str::random(8)
+        'password' => $faker->password
     ];
 });

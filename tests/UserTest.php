@@ -3,7 +3,7 @@
 use App\Models\User;
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
-
+use Faker\Factory;
 
 class UserTest extends TestCase
 {
@@ -12,12 +12,19 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testExample()
+    public function testStore()
     {
-        $this->json('POST', '/auth/store', ['perPage' => '1'])
-            ->seeJson([
-                'code' => 400,
-            ]);
+        $faker = Factory::create();
+        $input_data = [
+            'name' => $faker->name,
+            'email' => $faker->email,
+            'password' => $faker->password
+        ];
+
+        $response = $this->json('POST', '/auth/store', $input_data);
+        $response->assertResponseOk();
+
+        $response->seeInDatabase('users', ['name' => $input_data['name']]);
     }
 
 
