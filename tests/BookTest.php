@@ -17,6 +17,35 @@ class BookTest extends TestCase
         $response = $this->json('GET', '/book', ['perPage' => '1']);
 
         $response->assertResponseOk();
+
+        $response->seeJsonStructure([
+            'data' => [
+                'current_page',
+                'data' => [
+                    '*' => [
+                        'isbn',
+                        'title',
+                        'author',
+                        'publisher',
+                        'publication_date',
+                        'summary',
+                        'img_src',
+                        'created_at',
+                        'updated_at'
+                    ]
+                ],
+                "first_page_url",
+                "from",
+                "last_page",
+                "last_page_url",
+                "next_page_url",
+                "path",
+                "per_page",
+                "prev_page_url",
+                "to",
+                "total",
+            ]
+        ]);
     }
 
     public function testBookDetail()
