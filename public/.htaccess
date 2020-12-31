@@ -3,7 +3,6 @@
         Options -MultiViews -Indexes
     </IfModule>
 
-    SSLEngine on
     RewriteEngine On
 
     # Handle Authorization Header
