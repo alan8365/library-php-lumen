@@ -55,7 +55,7 @@ class BookTest extends TestCase
         ]);
     }
 
-    public function testBookDetail()
+    public function testDetail()
     {
         $response = $this->json('GET', '/book/' . $this->test_isbn);
 
@@ -77,8 +77,6 @@ class BookTest extends TestCase
     {
         $user = factory(User::class)->create();
         $book = factory(Book::class)->create();
-
-        print_r($book->isbn);
 
         $response = $this->actingAs($user)
             ->json('POST', '/book/favorite/' . $book->isbn);
