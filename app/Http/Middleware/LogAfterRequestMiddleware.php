@@ -25,7 +25,7 @@ class LogAfterRequestMiddleware
      * @param $request
      * @param $response
      */
-    public function terminate(Request $request, Response $response)
+    public function terminate(Request $request, $response) //TODO Response move back
     {
         Log::info('app.requests', ['request' => $request->all(), 'responseStatus' => $response->status()]);
     }

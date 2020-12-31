@@ -52,7 +52,12 @@ class BookController extends Controller
     {
         $book = Book::where('isbn', '=', $isbn)->first();
         $user = auth()->user();
-        $isLike = $book->users()->where('email', '=', $user->email)->get()->count() > 0;
+
+        if ($user){
+            $isLike = $book->users()->where('email', '=', $user->email)->get()->count() > 0;
+        }else{
+            $isLike = false;
+        }
 
 //        $books = Book::all()->leftJoin('', 'books.isbn', '=', 'users');
         return resp(Code::Success, Msg::Success, [

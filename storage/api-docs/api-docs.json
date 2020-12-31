@@ -1,0 +1,23 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Library",
+        "description": "HI",
+        "contact": {
+            "name": "Lucy",
+            "email": "alan8365@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "user/list": {
+            "get": {
+                "responses": {
+                    "default": {
+                        "description": "HIHI"
+                    }
+                }
+            }
+        }
+    }
+}

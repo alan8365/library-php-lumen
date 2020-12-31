@@ -119,20 +119,6 @@ class UserController extends Controller
     }
 
     /**
-     * @param $token
-     * @return array
-     * Return token message
-     */
-    protected function responseWithToken($token)
-    {
-        return [
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * env('JWT_TTL')
-        ];
-    }
-
-    /**
      * @return Response
      * Get current user info
      */
@@ -158,5 +144,19 @@ class UserController extends Controller
     public function refresh()
     {
         return $this->responseWithToken(auth()->refresh());
+    }
+
+    /**
+     * @param $token
+     * @return array
+     * Return token message
+     */
+    protected function responseWithToken($token)
+    {
+        return [
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * env('JWT_TTL')
+        ];
     }
 }
