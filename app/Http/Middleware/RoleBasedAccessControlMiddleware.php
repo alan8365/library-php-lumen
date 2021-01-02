@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
 use Illuminate\Http\Request;
 
-class Authenticate
+class RoleBasedAccessControlMiddleware
 {
     /**
      * The authentication guard factory instance.
