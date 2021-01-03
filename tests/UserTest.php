@@ -10,7 +10,7 @@ $faker = Factory::create();
 $input_data = [
     'name' => $faker->name,
     'email' => $faker->email,
-    'password' => $faker->password
+    'password' => $faker->password(8, 32)
 ];
 $auth_token = '';
 
@@ -48,7 +48,7 @@ class UserTest extends TestCase
 
         $response = $this->json('POST', '/auth/login', $input_data);
 
-        $response->assertResponseOk();
+        $response->seeJson(['code' => 200]);
 
         $response->seeInDatabase('users', ['name' => $input_data['name']]);
 

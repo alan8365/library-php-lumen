@@ -15,15 +15,6 @@ class BookController extends Controller
 {
 
     /**
-     * UserController constructor.
-     * Auth middleware, exclude login and register.
-     */
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['list', 'store', 'detail']]);
-    }
-
-    /**
      * @param Request $request
      * @return Response
      *
@@ -53,9 +44,9 @@ class BookController extends Controller
         $book = Book::where('isbn', '=', $isbn)->first();
         $user = auth()->user();
 
-        if ($user){
+        if ($user) {
             $isLike = $book->users()->where('email', '=', $user->email)->get()->count() > 0;
-        }else{
+        } else {
             $isLike = false;
         }
 
@@ -125,10 +116,10 @@ class BookController extends Controller
 
         $isLiked = $user->books()->where('isbn', '=', $isbn)->count() < 1;
 
-        if ($isLiked){
+        if ($isLiked) {
             $user->books()->attach($isbn);
             return resp(Code::Success, Msg::SetFavoriteSuccess);
-        }else{
+        } else {
             $user->books()->detach($isbn);
             return resp(Code::Success, Msg::UnsetFavoriteSuccess);
         }

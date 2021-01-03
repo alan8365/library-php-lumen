@@ -59,7 +59,7 @@ class UserController extends Controller
         $attributes = [
             'email' => $email,
             'name' => $name,
-            'password' => app('hash')->make($password)
+            'password' => $password
         ];
 
         $user = User::create($attributes);
@@ -89,6 +89,7 @@ class UserController extends Controller
     }
 
     // TODO Let exp longer
+
     /**
      * @param Request $request
      * @return Response

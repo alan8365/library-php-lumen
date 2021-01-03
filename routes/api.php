@@ -13,6 +13,8 @@
 
 use \Laravel\Lumen\Routing\Router;
 
+// auth router
+
 /** @var Router $router */
 $router->options('{any:.*}', ['middleware' => 'cors']);
 
@@ -31,15 +33,29 @@ $router->group([
 });
 
 
+// book router
+
 /** @var Router $router */
 $router->group([
     'prefix' => 'book',
     'namespace' => 'Api',
     'middleware' => 'cors'
 ], function () use ($router) {
+    // Through by auth
+    $router->group([
+        'middleware' => ['auth']
+    ], function () use ($router) {
+        $router->get('favorite', 'BookController@listFavorite');
+        $router->post('favorite/{isbn}', 'BookController@setFavorite');
+    });
+
+    // Through by book-write
+    $router->group([
+        'middleware' => ['auth', 'rbac:book-write']
+    ], function () use ($router) {
+        $router->post('', 'BookController@store');
+    });
+
     $router->get('', 'BookController@list');
-    $router->post('', 'BookController@store');
     $router->get('{isbn:\d+}', 'BookController@detail');
-    $router->get('favorite', 'BookController@listFavorite');
-    $router->post('favorite/{isbn}', 'BookController@setFavorite');
 });

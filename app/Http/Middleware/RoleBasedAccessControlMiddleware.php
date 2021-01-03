@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
 use Illuminate\Http\Request;
 
-class Authenticate
+class RoleBasedAccessControlMiddleware
 {
     /**
      * The authentication guard factory instance.
@@ -31,15 +31,15 @@ class Authenticate
      *
      * @param Request $request
      * @param Closure $next
-     * @param string|null $guard
+     * @param string $permission
      * @return mixed
      */
-    public function handle(Request $request, Closure $next, $guard = null)
+    public function handle(Request $request, Closure $next, string $permission)
     {
-        if ($this->auth->guard($guard)->guest()) {
+        if ($request->user()->checkPermission($permission)) {
+            return $next($request);
+        } else {
             return response('Unauthorized.', 401);
         }
-
-        return $next($request);
     }
 }

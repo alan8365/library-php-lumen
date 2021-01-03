@@ -79,8 +79,9 @@ $app->middleware([
 ]);
 
 $app->routeMiddleware([
-    'auth' => App\Http\Middleware\Authenticate::class,
-    'cors' => App\Http\Middleware\CorsMiddleware::class
+    'auth' => App\Http\Middleware\AuthenticateMiddleware::class,
+    'cors' => App\Http\Middleware\CorsMiddleware::class,
+    'rbac' => App\Http\Middleware\RoleBasedAccessControlMiddleware::class
 ]);
 
 /*
@@ -130,7 +131,6 @@ $app->router->group([
     require __DIR__ . '/../routes/web.php';
     require __DIR__ . '/../routes/api.php';
 });
-
 
 
 return $app;
