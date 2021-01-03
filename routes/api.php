@@ -42,7 +42,7 @@ $router->group([
     'middleware' => 'cors'
 ], function () use ($router) {
     $router->group([
-        'middleware' => 'auth'
+        'middleware' => ['rbac:bububu', 'auth']
     ], function () use ($router) {
         $router->get('favorite', 'BookController@listFavorite');
         $router->post('favorite/{isbn}', 'BookController@setFavorite');

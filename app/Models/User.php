@@ -44,13 +44,17 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'password',
     ];
 
-    /**
-     * The roles that belong to the user.
-     * @return BelongsToMany
-     */
-    public function books()
+    public static function create(array $attributes = [])
     {
-        return $this->belongsToMany('App\Models\Book', 'user_favorite_book', 'user_id', 'book_id');
+        $attributes['password'] = app('hash')->make($attributes['password']);
+
+        $model = static::query()->create($attributes);
+
+        $role = Role::where('title', 'Reader')->first();
+
+        $model->roles()->attach($role->id);
+
+        return $model;
     }
 
     /**
@@ -69,5 +73,26 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    /**
+     * The roles that belong to the user.
+     * @return BelongsToMany
+     */
+    public function books()
+    {
+        return $this
+            ->belongsToMany('App\Models\Book', 'user_favorite_book', 'user_id', 'book_id')
+            ->withTimestamps();
+    }
+
+    /**
+     * The roles that belong to the user.
+     */
+    public function roles()
+    {
+        return $this
+            ->belongsToMany('App\Models\Role', 'user_role', 'user_id', 'role_id')
+            ->withTimestamps();
     }
 }

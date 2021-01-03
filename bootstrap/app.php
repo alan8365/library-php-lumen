@@ -81,7 +81,7 @@ $app->middleware([
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\AuthenticateMiddleware::class,
     'cors' => App\Http\Middleware\CorsMiddleware::class,
-    'rabc' => App\Http\Middleware\RoleBasedAccessControlMiddleware::class
+    'rbac' => App\Http\Middleware\RoleBasedAccessControlMiddleware::class
 ]);
 
 /*

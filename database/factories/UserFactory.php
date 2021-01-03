@@ -23,6 +23,6 @@ $factory->define(User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->email,
-        'password' => $faker->password
+        'password' => app('hash')->make($faker->password(8, 32))
     ];
 });

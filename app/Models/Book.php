@@ -36,6 +36,8 @@ class Book extends Model
      */
     public function users()
     {
-        return $this->belongsToMany('App\Models\User', 'user_favorite_book', 'book_id', 'user_id');
+        return $this
+            ->belongsToMany('App\Models\User', 'user_favorite_book', 'book_id', 'user_id')
+            ->withTimestamps();
     }
 }

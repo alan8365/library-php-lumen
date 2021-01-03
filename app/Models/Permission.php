@@ -18,5 +18,13 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  */
 class Permission extends Model
 {
-
+    /**
+     * The roles that belong to the user.
+     */
+    public function roles()
+    {
+        return $this
+            ->belongsToMany('App\Models\Role', 'role_permission', 'permission_id', 'role_id')
+            ->withTimestamps();
+    }
 }

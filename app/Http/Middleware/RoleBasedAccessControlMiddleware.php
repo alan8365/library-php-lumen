@@ -34,11 +34,15 @@ class RoleBasedAccessControlMiddleware
      * @param string|null $guard
      * @return mixed
      */
-    public function handle(Request $request, Closure $next, $guard = null)
+    public function handle($request, Closure $next, $permission)
     {
-        if ($this->auth->guard($guard)->guest()) {
-            return response('Unauthorized.', 401);
-        }
+//        if ($this->auth->guard($guard)->guest()) {
+//            return response('Unauthorized.', 401);
+//        }
+
+//        print_r($request->header());
+        echo '
+';
 
         return $next($request);
     }
