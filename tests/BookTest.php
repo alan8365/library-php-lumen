@@ -73,7 +73,7 @@ class BookTest extends TestCase
         ]);
     }
 
-    public function testSetFavorite()
+    public function testSetFavoriteAndDetail()
     {
         $user = factory(User::class)->create();
         $book = factory(Book::class)->create();
@@ -82,6 +82,13 @@ class BookTest extends TestCase
             ->json('POST', '/book/favorite/' . $book->isbn);
 
         $response->assertResponseOk();
+
+        $response = $this->actingAs($user)
+            ->json('GET', '/book/' . $book->isbn);
+
+        $response->seeJson([
+            'isLike' => true
+        ]);
     }
 
     public function testListFavorite()

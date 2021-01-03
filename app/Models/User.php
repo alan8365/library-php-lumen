@@ -50,9 +50,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
         $model = static::query()->create($attributes);
 
-        $role = Role::where('title', 'Reader')->first();
-
-        $model->roles()->attach($role->id);
+        $model->roles()->attach('reader');
 
         return $model;
     }
@@ -73,6 +71,21 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    /**
+     * @param $permission string
+     * @return boolean
+     */
+    public function checkPermission(string $permission)
+    {
+        foreach ($this->roles as $role) {
+            if ($role->hasPermission($permission)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

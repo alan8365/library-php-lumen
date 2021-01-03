@@ -18,6 +18,8 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  */
 class Permission extends Model
 {
+    protected $primaryKey = 'slug';
+
     /**
      * The roles that belong to the user.
      */
