@@ -129,5 +129,18 @@ class BookTest extends TestCase
             )
         ]);
     }
+
+    public function testRemove()
+    {
+        $book = factory(Book::class)->create();
+        $user = User::find('Xiao@gmail.com');
+
+        $response = $this->actingAs($user)
+            ->json('DELETE', '/book/' . $book->isbn);
+
+        $response->seeJson(['code' => 200]);
+
+        $response->notSeeInDatabase('books', ['isbn' => $book->isbn]);
+    }
     //TODO expect case test
 }

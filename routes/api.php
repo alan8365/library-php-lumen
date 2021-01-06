@@ -54,6 +54,7 @@ $router->group([
         'middleware' => ['auth', 'rbac:book-write']
     ], function () use ($router) {
         $router->post('', 'BookController@store');
+        $router->delete('{isbn:\d+}', 'BookController@remove');
     });
 
     $router->get('', 'BookController@list');

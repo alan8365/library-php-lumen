@@ -71,6 +71,17 @@ class BookController extends Controller
     public function store(Request $request)
     {
         // TODO add validator
+        $validator = Validator::make($request->all(), [
+            'isbn' => 'required|unique:books'
+        ], [
+            'isbn.unique' => 'Book already exist.'
+        ]);
+
+        if ($validator->fails()) {
+            foreach ($validator->errors()->getMessages() as $error) {
+                return resp(Code::Failed, $error[0]);
+            }
+        }
 
         $isbn = $request->get('isbn');
         $title = $request->get('title');
@@ -103,7 +114,6 @@ class BookController extends Controller
     public function listFavorite(Request $request)
     {
         // $perPage = intval($request->get('perPage'));
-
         $user = auth()->user();
 
         // TODO perPage uniform
@@ -132,7 +142,6 @@ class BookController extends Controller
         }
 
     }
-
 
     /**
      * @OA\Get(
@@ -182,6 +191,19 @@ class BookController extends Controller
 
         return resp(Code::Success, Msg::Success, $books);
     }
+
+    /**
+     * @param Request $request
+     * @param string $isbn
+     * @return Response
+     * @throws \Exception
+     */
+    public function remove(Request $request, string $isbn)
+    {
+        $book = Book::find($isbn);
+
+        $book->delete();
+
+        return resp(Code::Success, Msg::Success);
+    }
 }
-
-

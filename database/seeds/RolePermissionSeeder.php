@@ -52,10 +52,31 @@ class RolePermissionSeeder extends Seeder
         ]);
 
         // Role Permission
-
         DB::table('role_permission')->insert([
             'role_id' => 'reader',
             'permission_id' => 'book-read',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+
+        DB::table('role_permission')->insert([
+            'role_id' => 'manager',
+            'permission_id' => 'book-read',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+
+        DB::table('role_permission')->insert([
+            'role_id' => 'manager',
+            'permission_id' => 'book-write',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+
+        // Super User
+        DB::table('user_role')->insert([
+            'user_id' => 'Xiao@gmail.com',
+            'role_id' => 'manager',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
