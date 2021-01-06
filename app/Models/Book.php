@@ -31,6 +31,11 @@ class Book extends Model
         'isbn', 'title', 'author', 'publisher', 'publication_date', 'summary', 'img_src'
     ];
 
+    public static function searchBook(string $title)
+    {
+        return Book::where('title', 'like', "%$title%");
+    }
+
     /**
      * The roles that belong to the user.
      */

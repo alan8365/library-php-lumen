@@ -9,14 +9,68 @@
         },
         "version": "1.0.0"
     },
+    "servers": [
+        {
+            "url": "http://localhost",
+            "description": "dev env"
+        }
+    ],
     "paths": {
-        "user/list": {
+        "book/": {
             "get": {
                 "responses": {
                     "default": {
                         "description": "HIHI"
                     }
                 }
+            }
+        },
+        "book/search": {
+            "get": {
+                "summary": "search book by title",
+                "operationId": "App\\Http\\Controllers\\Api\\BookController::search",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "description": "title of book",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ApiResponse": {
+                "title": "響應實體",
+                "description": "響應實體，響應結果統一使用該結構",
+                "properties": {
+                    "code": {
+                        "description": "響應程式碼",
+                        "type": "string"
+                    },
+                    "message": {
+                        "description": "響應結果提示",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
             }
         }
     }

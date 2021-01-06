@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers\Api;
 
+
 use App\Exceptions\Code;
 use App\Exceptions\Msg;
+use App\Http\Validator\searchValidator;
 use App\Models\Book;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use OpenApi\Annotations\Get;
+use OpenApi\Annotations\MediaType;
+use OpenApi\Annotations\RequestBody;
 
 const perPage = 10;
 
@@ -19,7 +26,7 @@ class BookController extends Controller
      * @return Response
      *
      * @OA\Get(
-     *     path="user/list",
+     *     path="book/",
      *     @OA\Response(
      *         response="default",
      *         description="HIHI"
@@ -125,4 +132,56 @@ class BookController extends Controller
         }
 
     }
+
+
+    /**
+     * @OA\Get(
+     *     path="book/search",
+     *     summary="search book by title",
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 required={"title"},
+     *                 @OA\Property(property="title", type="string", description="title of book"),
+     *             ),
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Success",
+     *     ),
+     * )
+     *
+     * @param Request $request
+     * @return Response
+     *
+     */
+    public function search(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:255',
+        ], [
+            'title.required' => 'Please input title',
+            'title.max' => 'title at most :max characters',
+        ]);
+
+        if ($validator->fails()) {
+            foreach ($validator->errors()->getMessages() as $error) {
+                return resp(Code::Failed, $error[0]);
+            }
+        }
+
+        ['title' => $title] = $request->all();
+
+        $books = Book::searchBook($title)->paginate(perPage);
+
+        if ($books->total() <= 0) {
+            return resp(Code::NotFound, Msg::BookNotFound);
+        }
+
+        return resp(Code::Success, Msg::Success, $books);
+    }
 }
+
+

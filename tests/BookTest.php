@@ -114,5 +114,20 @@ class BookTest extends TestCase
         ]);
     }
 
+    public function testSearch()
+    {
+        $response = $this->json('GET', '/book/search', ['title' => '作業系統']);
+
+        $response->seeJson(['code' => 200]);
+
+        $response->seeJsonStructure([
+            'data' => array_merge(
+                ['data' => [
+                    '*' => $this->book_structure
+                ]],
+                $this->page_structure
+            )
+        ]);
+    }
     //TODO expect case test
 }

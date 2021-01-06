@@ -10,6 +10,7 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
+
 use Illuminate\Support\Facades\Route;
 
 
