@@ -26,5 +26,6 @@ class Msg
     const SetFavoriteSuccess = 'SetFavoriteSuccess';
     const UnsetFavoriteSuccess = 'UnsetFavoriteSuccess';
 
+    const BookNotFound = 'BookNotFound';
 }
 

@@ -58,4 +58,5 @@ $router->group([
 
     $router->get('', 'BookController@list');
     $router->get('{isbn:\d+}', 'BookController@detail');
+    $router->get('search', 'BookController@search');
 });
