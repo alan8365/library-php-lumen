@@ -27,16 +27,54 @@ class UserController extends Controller
      * @param Request $request
      * @return Response
      * Register user
+     *
+     * @OA\Post(
+     *     path="/auth/store",
+     *     summary="Register user.",
+     *     tags={"Auth"},
+     *     @OA\Parameter(
+     *         name="name",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="email",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="password",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Register success"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Field invalid"
+     *     )
+     * )
      */
     public function store(Request $request)
     {
         $message = [
+            'name.required' => 'Please input name',
+            'name.min' => 'name at least :min characters',
             'email.required' => 'Please input email',
             'email.email' => 'email format incorrect',
             'email.unique' => 'email exist',
-            'name.required' => 'Please input name',
             'password.required' => 'Please input password',
-            'name.min' => 'name at least :min characters',
             'password.min' => 'password at least :min characters',
         ];
 
@@ -88,12 +126,44 @@ class UserController extends Controller
         return resp(Code::Success, Msg::Success, $user);
     }
 
-    // TODO Let exp longer
-
     /**
      * @param Request $request
      * @return Response
      * User login
+     *
+     * @OA\Post(
+     *     path="/auth/login",
+     *     summary="Get token in website.",
+     *     tags={"Auth"},
+     *     @OA\Parameter(
+     *         name="email",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="password",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="List success"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Field invalid"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="User not found"
+     *     )
+     * )
      */
     public function login(Request $request)
     {
@@ -123,6 +193,21 @@ class UserController extends Controller
     /**
      * @return Response
      * Get current user info
+     *
+     * @OA\Get(
+     *     path="/auth/whoAmI",
+     *     summary="Get current user info.",
+     *     tags={"Auth"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Get user info success."
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized."
+     *     )
+     * )
      */
     public function whoAmI()
     {
@@ -132,6 +217,21 @@ class UserController extends Controller
     /**
      * @return Response
      * User logout
+     *
+     * @OA\Post(
+     *     path="/auth/logout",
+     *     summary="Cancel token.",
+     *     tags={"Auth"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Logout success."
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized."
+     *     )
+     * )
      */
     public function logout()
     {
