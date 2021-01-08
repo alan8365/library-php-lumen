@@ -27,16 +27,54 @@ class UserController extends Controller
      * @param Request $request
      * @return Response
      * Register user
+     *
+     * @OA\Post(
+     *     path="/auth/store",
+     *     summary="Register user.",
+     *     tags={"Auth"},
+     *     @OA\Parameter(
+     *         name="name",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="email",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="password",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="list success"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Field invalid"
+     *     )
+     * )
      */
     public function store(Request $request)
     {
         $message = [
+            'name.required' => 'Please input name',
+            'name.min' => 'name at least :min characters',
             'email.required' => 'Please input email',
             'email.email' => 'email format incorrect',
             'email.unique' => 'email exist',
-            'name.required' => 'Please input name',
             'password.required' => 'Please input password',
-            'name.min' => 'name at least :min characters',
             'password.min' => 'password at least :min characters',
         ];
 

@@ -12,29 +12,35 @@ use OpenApi\Annotations\Server;
  * @info(
  *     version="1.0.0",
  *     title="Library",
- *     description="HI",
+ *     description="A php library website",
  *     @Contact(
  *         email="alan8365@gmail.com",
  *         name="Lucy"
  *     )
  * )
  *
- * @Server(
- *     url="http://localhost",
- *     description="dev env",
+ * @OA\SecurityScheme(
+ *      securityScheme="bearerAuth",
+ *      in="header",
+ *      name="bearerAuth",
+ *      type="http",
+ *      scheme="Bearer",
+ *      bearerFormat="JWT",
  * )
  *
- * @Schema(
- *     schema="ApiResponse",
- *     type="object",
- *     description="響應實體，響應結果統一使用該結構",
- *     title="響應實體",
- *     @Property(
- *         property="code",
- *         type="string",
- *         description="響應程式碼"
- *     ),
- *     @Property(property="message", type="string", description="響應結果提示")
+ * @Server(
+ *     url="http://localhost:8000",
+ *     description="Develop environment",
+ * )
+ *
+ * @OA\Tag(
+ *     name="Auth",
+ *     description="Auth endpoints",
+ * )
+ *
+ * @OA\Tag(
+ *     name="Book",
+ *     description="Auth endpoints",
  * )
  *
  * @package App\Http\Controllers

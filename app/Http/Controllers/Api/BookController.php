@@ -26,10 +26,20 @@ class BookController extends Controller
      * @return Response
      *
      * @OA\Get(
-     *     path="book/",
+     *     path="/book",
+     *     summary="List all posts by paginate",
+     *     tags={"Book"},
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="int",
+     *         )
+     *     ),
      *     @OA\Response(
-     *         response="default",
-     *         description="HIHI"
+     *         response=200,
+     *         description="list success"
      *     )
      * )
      */
@@ -45,11 +55,37 @@ class BookController extends Controller
      * @param Request $request
      * @param string $isbn
      * @return Response
+     *
+     * @OA\Get(
+     *     path="/book/{isbn}",
+     *     summary="Show book detail",
+     *     tags={"Book"},
+     *     @OA\Parameter(
+     *         name="isbn",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Get detail success."
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Book not found."
+     *     )
+     * )
      */
     public function detail(Request $request, string $isbn)
     {
         $book = Book::where('isbn', '=', $isbn)->first();
         $user = auth()->user();
+
+        if (!$book) {
+            return resp(Code::NotFound, Msg::BookNotFound);
+        }
 
         if ($user) {
             $isLike = $book->users()->where('email', '=', $user->email)->get()->count() > 0;
@@ -99,11 +135,36 @@ class BookController extends Controller
     /**
      * @param Request $request
      * @return Response
+     *
+     * @OA\Get(
+     *     path="/book/favorite",
+     *     summary="Show all favorite book.",
+     *     tags={"Book"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\SecurityScheme(
+     *         securityScheme="bearerAuth",
+     *         in="header",
+     *         name="bearerAuth",
+     *         type="http",
+     *         scheme="bearer",
+     *         bearerFormat="JWT",
+     *     ),
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="int",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Get favorite book success."
+     *     ),
+     * )
      */
     public function listFavorite(Request $request)
     {
-        // $perPage = intval($request->get('perPage'));
-
         $user = auth()->user();
 
         // TODO perPage uniform
@@ -116,9 +177,44 @@ class BookController extends Controller
      * @param Request $request
      * @param string $isbn
      * @return Response
+     *
+     * @OA\Post(
+     *     path="/book/favorite/{isbn}",
+     *     summary="Chage book favorite status.",
+     *     tags={"Book"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="isbn",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Change book favorite status success."
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Book not found."
+     *     )
+     * )
      */
     public function setFavorite(Request $request, string $isbn)
     {
+        $validator = Validator::make(["isbn" => $isbn], [
+            'isbn' => 'exists:books',
+        ], [
+            'isbn.exists' => 'isbn is not in database.'
+        ]);
+
+        if ($validator->fails()) {
+            foreach ($validator->errors()->getMessages() as $error) {
+                return resp(Code::NotFound, Msg::BookNotFound);
+            }
+        }
+
         $user = auth()->user();
 
         $isLiked = $user->books()->where('isbn', '=', $isbn)->count() < 1;
@@ -136,16 +232,24 @@ class BookController extends Controller
 
     /**
      * @OA\Get(
-     *     path="book/search",
-     *     summary="search book by title",
-     *     @OA\RequestBody(
-     *         @OA\MediaType(
-     *             mediaType="application/json",
-     *             @OA\Schema(
-     *                 required={"title"},
-     *                 @OA\Property(property="title", type="string", description="title of book"),
-     *             ),
-     *         ),
+     *     path="/book/search",
+     *     summary="Search book by title",
+     *     tags={"Book"},
+     *     @OA\Parameter(
+     *         name="title",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="int",
+     *         )
      *     ),
      *     @OA\Response(
      *         response="200",
@@ -155,7 +259,6 @@ class BookController extends Controller
      *
      * @param Request $request
      * @return Response
-     *
      */
     public function search(Request $request)
     {
