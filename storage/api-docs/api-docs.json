@@ -194,12 +194,94 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "list success"
+                        "description": "Register success"
                     },
                     "400": {
                         "description": "Field invalid"
                     }
                 }
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Get token in website.",
+                "operationId": "App\\Http\\Controllers\\Api\\UserController::login",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List success"
+                    },
+                    "400": {
+                        "description": "Field invalid"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/auth/whoAmI": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Get current user info.",
+                "operationId": "App\\Http\\Controllers\\Api\\UserController::whoAmI",
+                "responses": {
+                    "200": {
+                        "description": "Get user info success."
+                    },
+                    "401": {
+                        "description": "Unauthorized."
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/auth/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Cancel token.",
+                "operationId": "App\\Http\\Controllers\\Api\\UserController::logout",
+                "responses": {
+                    "200": {
+                        "description": "Logout success."
+                    },
+                    "401": {
+                        "description": "Unauthorized."
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         }
     },

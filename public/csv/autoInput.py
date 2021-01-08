@@ -4,7 +4,7 @@ import requests
 
 count = 5
 
-backend_url = "https://desolate-inlet-93504.herokuapp.com/book"
+backend_url = "http://localhost:8000/book"
 
 csv_url = os.path.join(os.getcwd(), 'tenlong.csv')
 

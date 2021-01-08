@@ -35,12 +35,17 @@ use OpenApi\Annotations\Server;
  *
  * @OA\Tag(
  *     name="Auth",
- *     description="Auth endpoints",
+ *     description="Auth collection",
  * )
  *
  * @OA\Tag(
  *     name="Book",
- *     description="Auth endpoints",
+ *     description="Book collection",
+ * )
+ *
+ * @OA\Tag(
+ *     name="Dashboard",
+ *     description="Dashboard collection",
  * )
  *
  * @package App\Http\Controllers
