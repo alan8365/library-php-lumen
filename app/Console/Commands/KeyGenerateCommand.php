@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -7,29 +8,28 @@ use Symfony\Component\Console\Input\InputOption;
 
 class KeyGenerateCommand extends Command
 {
-    // 命令名
     protected $name = 'key:generate';
-    // 描述
     protected $description = "Set the application key";
-    // 执行
-    public function handle() {
+
+    public function handle()
+    {
         $key = $this->getRandomKey();
-        if ($this->option('show')){
-            $this->line('<command>'.$key.'</command>');
+        if ($this->option('show')) {
+            $this->line('<command>' . $key . '</command>');
             return;
         }
         $path = base_path('.env');
-        if (file_exists($path)){
-            file_put_contents($path, str_replace('APP_KEY='.env('APP_KEY'), 'APP_KEY='.$key, file_get_contents($path)));
+        if (file_exists($path)) {
+            file_put_contents($path, str_replace('APP_KEY=' . env('APP_KEY'), 'APP_KEY=' . $key, file_get_contents($path)));
         }
         $this->info("Application key [$key] set successfully.");
     }
 
     /**
      * @return string
-     * 获取随机32key
      */
-    protected function getRandomKey(){
+    protected function getRandomKey()
+    {
         return Str::random(32);
     }
 

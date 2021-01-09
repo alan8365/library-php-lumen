@@ -60,3 +60,22 @@ $router->group([
     $router->get('{isbn:\d+}', 'BookController@detail');
     $router->get('search', 'BookController@search');
 });
+
+
+/** @var Router $router */
+$router->group([
+    'prefix' => 'dashboard',
+    'namespace' => 'Api',
+    'middleware' => ['cors', 'auth']
+], function () use ($router) {
+    // Book access
+    $router->group([
+        'prefix' => 'book',
+        'middleware' => 'rbac:book-write'
+    ], function () use ($router) {
+        $router->post('', 'DashboardController@storeBook');
+        $router->get('', 'DashboardController@getAllBook');
+        $router->put('{isbn:\d+}', 'DashboardController@updateBook');
+        $router->delete('{isbn:\d+}', 'DashboardController@removeBook');
+    });
+});
