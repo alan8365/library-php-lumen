@@ -18,6 +18,8 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  */
 class Role extends Model
 {
+    public $table = 'roles';
+    protected $keyType = 'string';
     protected $primaryKey = 'slug';
 
     /**
@@ -26,7 +28,7 @@ class Role extends Model
      */
     public function hasPermission(string $permission)
     {
-        return $this->permissions()->find($permission) !== null;
+        return $this->permissions()->where('slug', $permission)->count() !== 0;
     }
 
     /**

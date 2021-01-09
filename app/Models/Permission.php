@@ -18,6 +18,8 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  */
 class Permission extends Model
 {
+    public $table = 'permissions';
+    protected $keyType = 'string';
     protected $primaryKey = 'slug';
 
     /**

@@ -5,7 +5,7 @@ import json
 
 count = 5
 
-backend_url = "http://localhost:8000"
+backend_url = "http://library-lumen.herokuapp.com"
 
 csv_url = os.path.join(os.getcwd(), 'tenlong.csv')
 
@@ -43,5 +43,7 @@ with open(csv_url, encoding='utf8') as csvfile:
         payload = f'isbn={isbn}&title={title}&author={author}&publication_date={publication_date}&summary={summary}&publisher={publisher}&img_src={img_src}'
         payload=payload.encode("utf-8").decode("latin1")
 
-        response = requests.request("POST", backend_url+'/book', headers=headers, data=payload)
+        response = requests.request("POST", backend_url+'/dashboard/book', headers=headers, data=payload)
         print(f'{response.status_code}: {title}')
+
+        break
