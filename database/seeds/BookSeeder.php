@@ -91,7 +91,7 @@ CHAPTER 16　Linux系統
 CHAPTER 17　Windows
 
 CHAPTER 18　影響的作業系統',
-            'img_src' => '',
+            'img_src' => 'https://cf-assets1.tenlong.com.tw/images/86264/medium/9789574837939.jpg',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);

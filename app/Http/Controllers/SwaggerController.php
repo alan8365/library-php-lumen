@@ -33,6 +33,11 @@ use OpenApi\Annotations\Server;
  *     description="Develop environment",
  * )
  *
+ * @Server(
+ *     url="http://library-lumen.herokuapp.com",
+ *     description="Heroku server",
+ * )
+ *
  * @OA\Tag(
  *     name="Auth",
  *     description="Auth collection",
