@@ -9,7 +9,7 @@ class BookTest extends TestCase
 {
     protected $test_isbn = '9789574837939';
     protected $user;
-    protected $book_structure = [
+    public static $book_structure = [
         'isbn',
         'title',
         'author',
@@ -20,7 +20,7 @@ class BookTest extends TestCase
         'created_at',
         'updated_at'
     ];
-    protected $page_structure = [
+    public static $page_structure = [
         'current_page',
         "first_page_url",
         "from",
@@ -48,9 +48,9 @@ class BookTest extends TestCase
         $response->seeJsonStructure([
             'data' => array_merge(
                 ['data' => [
-                    '*' => $this->book_structure
+                    '*' => BookTest::$book_structure
                 ]],
-                $this->page_structure
+                BookTest::$page_structure
             )
         ]);
     }
@@ -63,7 +63,7 @@ class BookTest extends TestCase
 
         $response->seeJsonStructure([
             'data' => [
-                'detail' => $this->book_structure,
+                'detail' => BookTest::$book_structure,
                 'isLike',
             ]
         ]);
@@ -107,9 +107,9 @@ class BookTest extends TestCase
         $response->seeJsonStructure([
             'data' => array_merge(
                 ['data' => [
-                    '*' => $this->book_structure
+                    '*' => BookTest::$book_structure
                 ]],
-                $this->page_structure
+                BookTest::$page_structure
             )
         ]);
     }
@@ -123,24 +123,11 @@ class BookTest extends TestCase
         $response->seeJsonStructure([
             'data' => array_merge(
                 ['data' => [
-                    '*' => $this->book_structure
+                    '*' => BookTest::$book_structure
                 ]],
-                $this->page_structure
+                BookTest::$page_structure
             )
         ]);
-    }
-
-    public function testRemove()
-    {
-        $book = factory(Book::class)->create();
-        $user = User::find('Xiao@gmail.com');
-
-        $response = $this->actingAs($user)
-            ->json('DELETE', '/book/' . $book->isbn);
-
-        $response->seeJson(['code' => 200]);
-
-        $response->notSeeInDatabase('books', ['isbn' => $book->isbn]);
     }
     //TODO expect case test
 }

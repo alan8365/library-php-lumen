@@ -33,7 +33,7 @@ class UserTest extends TestCase
 
         $response->assertResponseOk();
 
-        $response->seeInDatabase('users', ['name' => $input_data['name']]);
+        $response->seeInDatabase('users', ['email' => $input_data['email']]);
     }
 
 

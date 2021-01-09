@@ -78,7 +78,7 @@ class UserController extends Controller
             'password.min' => 'password at least :min characters',
         ];
 
-        $validator = Validator::make($request->input(), [
+        $validator = Validator::make($request->all(), [
             'name' => 'required|min:6',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8',
@@ -90,17 +90,7 @@ class UserController extends Controller
             }
         }
 
-        $name = $request->get('name');
-        $email = $request->get('email');
-        $password = $request->get('password');
-
-        $attributes = [
-            'email' => $email,
-            'name' => $name,
-            'password' => $password
-        ];
-
-        $user = User::create($attributes);
+        $user = User::create($request->all());
 
         return resp(Code::Success, Msg::CreateUserSuccess);
     }

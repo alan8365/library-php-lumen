@@ -159,6 +159,225 @@
                 }
             }
         },
+        "/dashboard/book": {
+            "get": {
+                "tags": [
+                    "Dashboard"
+                ],
+                "summary": "List all book",
+                "operationId": "App\\Http\\Controllers\\Api\\DashboardController::getAllBook",
+                "responses": {
+                    "200": {
+                        "description": "list success"
+                    },
+                    "401": {
+                        "description": "Unauthorized."
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Dashboard"
+                ],
+                "summary": "Create new book.",
+                "operationId": "App\\Http\\Controllers\\Api\\DashboardController::storeBook",
+                "parameters": [
+                    {
+                        "name": "isbn",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "author",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "publisher",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "publication_date",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "summary",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "img_src",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Create success"
+                    },
+                    "400": {
+                        "description": "Field invalid."
+                    },
+                    "401": {
+                        "description": "Unauthorized."
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/dashboard/book/{isbn}": {
+            "put": {
+                "tags": [
+                    "Dashboard"
+                ],
+                "summary": "Update target book.",
+                "operationId": "App\\Http\\Controllers\\Api\\DashboardController::updateBook",
+                "parameters": [
+                    {
+                        "name": "isbn",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "author",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "publisher",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "publication_date",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "summary",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "img_src",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Update success"
+                    },
+                    "400": {
+                        "description": "Field invalid."
+                    },
+                    "401": {
+                        "description": "Unauthorized."
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Dashboard"
+                ],
+                "summary": "Remove target book.",
+                "operationId": "App\\Http\\Controllers\\Api\\DashboardController::removeBook",
+                "parameters": [
+                    {
+                        "name": "isbn",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Delete success"
+                    },
+                    "401": {
+                        "description": "Unauthorized."
+                    },
+                    "404": {
+                        "description": "Book not found."
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/auth/store": {
             "post": {
                 "tags": [
@@ -299,11 +518,15 @@
     "tags": [
         {
             "name": "Auth",
-            "description": "Auth endpoints"
+            "description": "Auth collection"
         },
         {
             "name": "Book",
-            "description": "Auth endpoints"
+            "description": "Book collection"
+        },
+        {
+            "name": "Dashboard",
+            "description": "Dashboard collection"
         }
     ]
 }

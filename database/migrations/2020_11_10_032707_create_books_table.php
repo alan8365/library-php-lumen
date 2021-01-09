@@ -20,8 +20,10 @@ class CreateBooksTable extends Migration
             $table->string('publisher', 50);
             $table->date('publication_date');
             $table->longText('summary');
-            $table->string('img_src');
+            $table->string('img_src')->default('https://i.imgur.com/GG3U3rY.png');
             $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 

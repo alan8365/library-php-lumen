@@ -5,16 +5,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Exceptions\Code;
 use App\Exceptions\Msg;
-use App\Http\Validator\searchValidator;
 use App\Models\Book;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use OpenApi\Annotations\Get;
-use OpenApi\Annotations\MediaType;
-use OpenApi\Annotations\RequestBody;
 
 const perPage = 10;
 
@@ -103,49 +98,6 @@ class BookController extends Controller
     /**
      * @param Request $request
      * @return Response
-     */
-    public function store(Request $request)
-    {
-        // TODO add validator
-        $validator = Validator::make($request->all(), [
-            'isbn' => 'required|unique:books'
-        ], [
-            'isbn.unique' => 'Book already exist.'
-        ]);
-
-        if ($validator->fails()) {
-            foreach ($validator->errors()->getMessages() as $error) {
-                return resp(Code::Failed, $error[0]);
-            }
-        }
-
-        $isbn = $request->get('isbn');
-        $title = $request->get('title');
-        $author = $request->get('author');
-        $publisher = $request->get('publisher');
-        $publicationDate = $request->get('publication_date');
-        $summary = $request->get('summary');
-        $imgSrc = $request->get('img_src');
-
-        $attributes = [
-            'isbn' => $isbn,
-            'title' => $title,
-            'author' => $author,
-            'publisher' => $publisher,
-            'publication_date' => $publicationDate,
-            'img_src' => $imgSrc,
-            'summary' => $summary,
-        ];
-        error_log(print_r($attributes, true));
-
-        $book = Book::create($attributes);
-
-        return resp(Code::Success, Msg::Success, $book);
-    }
-
-    /**
-     * @param Request $request
-     * @return Response
      *
      * @OA\Get(
      *     path="/book/favorite",
@@ -177,8 +129,6 @@ class BookController extends Controller
     public function listFavorite(Request $request)
     {
         $user = auth()->user();
-
-        // TODO perPage uniform
         $books = $user->books()->paginate(perPage);
 
         return resp(Code::Success, Msg::Success, $books);
@@ -217,7 +167,7 @@ class BookController extends Controller
         $validator = Validator::make(["isbn" => $isbn], [
             'isbn' => 'exists:books',
         ], [
-            'isbn.exists' => 'isbn is not in database.'
+            'isbn.exists' => 'Thw isbn is not in database.'
         ]);
 
         if ($validator->fails()) {
@@ -296,18 +246,4 @@ class BookController extends Controller
         return resp(Code::Success, Msg::Success, $books);
     }
 
-    /**
-     * @param Request $request
-     * @param string $isbn
-     * @return Response
-     * @throws \Exception
-     */
-    public function remove(Request $request, string $isbn)
-    {
-        $book = Book::find($isbn);
-
-        $book->delete();
-
-        return resp(Code::Success, Msg::Success);
-    }
 }
